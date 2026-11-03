@@ -150,24 +150,115 @@ const MEME_CLIP_LIBRARY = {
   }
 };
 
-const ALL_DESI_MEMES = Object.values(MEME_CLIP_LIBRARY);
+let ALL_DESI_MEMES = Object.values(MEME_CLIP_LIBRARY);
+
+const MEME_MEDIA_API = "https://justmeme.wtf/api/v1";
+let EXTERNAL_MEME_TEMPLATES = [];
+let EXTERNAL_TRENDING_MEMES = [];
+
+function proxiedMemeImage(url) {
+  return "/api/meme-image?url=" + encodeURIComponent(url);
+}
+
+function normalizeExternalTemplate(template) {
+  const imageUrl = template && (template.url || template.image_url);
+  if (!imageUrl || !/^https:\/\/i\.imgflip\.com\//i.test(imageUrl)) return null;
+  const slug = template.slug || template.id || template.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+  const tags = Array.isArray(template.categories) ? template.categories : [];
+  const categoryText = (tags.join(" ") + " " + template.name).toLowerCase();
+  let category = "community";
+  if (/bollywood|indian|desi|hera pheri|babu rao|munna bhai|panchayat|mirzapur|ashneer|bhupendra|aayein/.test(categoryText)) category = "bollywood";
+  else if (/web.?series|series|show/.test(categoryText)) category = "webseries";
+  else if (/viral|reaction|trending/.test(categoryText)) category = "viral";
+  const proxiedUrl = proxiedMemeImage(imageUrl);
+  return {
+    id: "external-" + String(slug).replace(/[^a-zA-Z0-9_-]/g, "-"),
+    externalId: template.id || slug,
+    title: template.name || "Meme template",
+    movie: tags.length ? tags.join(" · ") : "Community template",
+    character: "Template",
+    dialogue: "",
+    category,
+    clipUrl: proxiedUrl,
+    poster: proxiedUrl,
+    templateUrl: proxiedUrl,
+    sourceUrl: imageUrl,
+    pageUrl: template.page_url || ("https://justmeme.wtf/meme/" + slug),
+    defaultTop: "",
+    defaultBottom: ""
+  };
+}
+
+async function fetchMemeApi(path) {
+  const response = await fetch(MEME_MEDIA_API + path);
+  if (!response.ok) throw new Error("Meme library request failed (" + response.status + ")");
+  const data = await response.json();
+  if (data.success === false) throw new Error(data.error || "Meme library request failed");
+  return data;
+}
+
+async function loadExternalMemeLibrary() {
+  const queries = ["hera pheri", "babu rao", "aayein", "binod", "ashneer", "indian meme", "bollywood", "munna bhai", "puneet superstar", "bhupendra jogi"];
+  try {
+    const results = await Promise.allSettled([
+      fetchMemeApi("/trending"),
+      fetchMemeApi("/templates?page=1&limit=100"),
+      ...queries.map(q => fetchMemeApi("/templates/search?q=" + encodeURIComponent(q)))
+    ]);
+    const collected = [];
+    const trendingData = results[0].status === "fulfilled" ? results[0].value : {};
+    const popularData = results[1].status === "fulfilled" ? results[1].value : {};
+    EXTERNAL_TRENDING_MEMES = (trendingData.trending || []).map(normalizeExternalTemplate).filter(Boolean);
+    collected.push(...(popularData.templates || []));
+    results.slice(2).forEach(result => {
+      if (result.status === "fulfilled") collected.push(...(result.value.templates || []));
+    });
+    collected.push(...(trendingData.trending || []));
+    const unique = new Map();
+    collected.forEach(item => {
+      const normalized = normalizeExternalTemplate(item);
+      if (normalized && !unique.has(normalized.id)) unique.set(normalized.id, normalized);
+    });
+    EXTERNAL_MEME_TEMPLATES = Array.from(unique.values());
+    if (!EXTERNAL_MEME_TEMPLATES.length) throw new Error("The meme provider returned no usable templates.");
+
+    // Replace the broken local placeholder paths with real, externally hosted templates.
+    ALL_DESI_MEMES = EXTERNAL_MEME_TEMPLATES;
+    TRENDING_MEME_IDEAS = (EXTERNAL_TRENDING_MEMES.length ? EXTERNAL_TRENDING_MEMES : ALL_DESI_MEMES.slice(0, 8))
+      .map((item, index) => ({
+        ...item,
+        situation: "Try this real meme template with your own situation.",
+        dialogue: "",
+        category: item.category || "community"
+      }));
+    renderTemplatePicker();
+    renderTrendingIdeas();
+    renderVaultMemes();
+    if (ALL_DESI_MEMES[0]) selectStockTemplate(ALL_DESI_MEMES[0].id);
+  } catch (error) {
+    console.warn("Could not load external meme templates:", error);
+    const grid = document.getElementById("vaultMemeGrid");
+    if (grid && !EXTERNAL_MEME_TEMPLATES.length) {
+      grid.innerHTML = '<p class="col-span-full text-sm text-slate-500">Live meme templates are temporarily unavailable. Please refresh to try again.</p>';
+    }
+  }
+}
 
 function getBestClipForMeme(meme) {
-  const text = ((meme.template_name || '') + ' ' + (meme.origin || '') + ' ' + (meme.character || '') + ' ' + (meme.clip_keyword || '')).toLowerCase();
-  
-  if (text.includes('babu') || text.includes('utha le') || text.includes('apte')) return MEME_CLIP_LIBRARY.babu_rao;
-  if (text.includes('hera pheri') || text.includes('scheme') || text.includes('akshay') || text.includes('paisa')) return MEME_CLIP_LIBRARY.hera_pheri;
-  if (text.includes('mirzapur') || text.includes('tripathi') || text.includes('munna') || text.includes('jalwa')) return MEME_CLIP_LIBRARY.mirzapur;
-  if (text.includes('binod') || text.includes('panchayat') || text.includes('sachiv')) return MEME_CLIP_LIBRARY.panchayat;
-  if (text.includes('idiot') || text.includes('virus') || text.includes('kehna kya') || text.includes('chatur')) return MEME_CLIP_LIBRARY.three_idiots;
-  if (text.includes('welcome') || text.includes('majnu') || text.includes('uday')) return MEME_CLIP_LIBRARY.welcome;
-  if (text.includes('aayein') || text.includes('bhupendra')) return MEME_CLIP_LIBRARY.aayein;
-  if (text.includes('khatam') || text.includes('bye bye') || text.includes('tata')) return MEME_CLIP_LIBRARY.tata_bye_bye;
-  if (text.includes('shark') || text.includes('ashneer') || text.includes('dogla')) return MEME_CLIP_LIBRARY.shark_tank;
-  if (text.includes('munna') || text.includes('circuit') || text.includes('nahi')) return MEME_CLIP_LIBRARY.munna_bhai;
-  if (text.includes('moye')) return MEME_CLIP_LIBRARY.moye_moye;
-
-  return MEME_CLIP_LIBRARY.hera_pheri;
+  const text = ((meme.template_name || "") + " " + (meme.origin || "") + " " +
+    (meme.character || "") + " " + (meme.clip_keyword || "") + " " + (meme.search_query || "")).toLowerCase();
+  const words = text.split(/[^a-z0-9]+/).filter(word => word.length > 2);
+  let best = null;
+  let bestScore = 0;
+  EXTERNAL_MEME_TEMPLATES.forEach(template => {
+    const candidate = (template.title + " " + template.movie + " " + template.character).toLowerCase();
+    const score = words.reduce((total, word) => total + (candidate.includes(word) ? 1 : 0), 0);
+    if (score > bestScore) {
+      best = template;
+      bestScore = score;
+    }
+  });
+  return best || EXTERNAL_TRENDING_MEMES[0] || EXTERNAL_MEME_TEMPLATES[0] || MEME_CLIP_LIBRARY.hera_pheri;
 }
 
 // ==========================================
@@ -526,7 +617,7 @@ function useInMemeStudio(caption, templateName, clipUrl) {
     (m.character && templateName.toLowerCase().includes(m.character.toLowerCase()))
   );
 
-  const imgToLoad = matched ? matched.templateUrl : (clipUrl || '/static/templates/akshay_scheme.png');
+  const imgToLoad = matched ? matched.templateUrl : (clipUrl || (EXTERNAL_TRENDING_MEMES[0] && EXTERNAL_TRENDING_MEMES[0].templateUrl) || '/static/templates/akshay_scheme.png');
   const img = new Image();
   img.onload = () => {
     currentMemeImg = img;
@@ -980,7 +1071,7 @@ async function generateVoiceover() {
 // ==========================================
 // 8. Trending Meme Idea Clips (Homepage Gallery)
 // ==========================================
-const TRENDING_MEME_IDEAS = [
+let TRENDING_MEME_IDEAS = [
   {
     id: "scheme",
     category: "dosti",
@@ -1262,9 +1353,8 @@ function openMemeInStudio(memeId) {
 
 // Initial setup
 window.addEventListener('DOMContentLoaded', () => {
-  renderTemplatePicker();
   renderSoundboard();
-  renderTrendingIdeas();
-  renderVaultMemes();
-  selectStockTemplate('akshay_scheme');
+  const vault = document.getElementById("vaultMemeGrid");
+  if (vault) vault.innerHTML = '<p class="col-span-full text-sm text-slate-500">Loading real meme templates…</p>';
+  loadExternalMemeLibrary();
 });
