@@ -258,7 +258,7 @@ function getBestClipForMeme(meme) {
       bestScore = score;
     }
   });
-  return best || EXTERNAL_TRENDING_MEMES[0] || EXTERNAL_MEME_TEMPLATES[0] || null;
+  return best || null;
 }
 
 // ==========================================
