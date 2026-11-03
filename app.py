@@ -28,13 +28,21 @@ if ENV_PATH.exists():
                     os.environ.setdefault(key.strip(), val)
 
 SARVAM_KEY = os.getenv("SARVAM_API_KEY", "")
-client = SarvamAI(api_subscription_key=SARVAM_KEY) if SARVAM_KEY else None
+
+def get_sarvam_client():
+    key = os.getenv("SARVAM_API_KEY", "")
+    if not key:
+        return None
+    return SarvamAI(api_subscription_key=key)
 
 app = FastAPI(title="MemeVaani - Desi Meme & Video Editor AI Studio")
 
 # Static files setup
 STATIC_DIR = BASE_DIR / "static"
-STATIC_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    STATIC_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 # -------------------------------------------------------------
@@ -102,6 +110,7 @@ def index():
 
 @app.post("/api/recommend")
 async def recommend_meme(req: RecommendRequest):
+    client = get_sarvam_client()
     if not client:
         raise HTTPException(status_code=500, detail="SARVAM_API_KEY is not configured.")
     if not req.situation.strip():
@@ -166,6 +175,7 @@ Return the matching Indian memes, audio cues, and video editor cut tips in the s
 
 @app.post("/api/tts")
 async def text_to_speech(req: TTSRequest):
+    client = get_sarvam_client()
     if not client:
         raise HTTPException(status_code=500, detail="SARVAM_API_KEY is not configured.")
     if not req.text.strip():
@@ -191,6 +201,7 @@ async def text_to_speech(req: TTSRequest):
 
 @app.post("/api/transcribe")
 async def transcribe_audio(file: UploadFile = File(...)):
+    client = get_sarvam_client()
     if not client:
         raise HTTPException(status_code=500, detail="SARVAM_API_KEY is not configured.")
 
