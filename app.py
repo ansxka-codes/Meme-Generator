@@ -3,6 +3,8 @@ import io
 import json
 import base64
 from pathlib import Path
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
 from typing import Optional, List
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse, Response
@@ -106,6 +108,39 @@ def index():
     if html_path.exists():
         return HTMLResponse(content=html_path.read_text(encoding="utf-8"))
     return HTMLResponse(content="<h1>MemeVaani is loading...</h1>")
+
+
+@app.get("/api/meme-image")
+def proxy_meme_image(url: str):
+    """Safely proxy public Imgflip template images so the canvas can use them without CORS taint."""
+    parsed = urlparse(url)
+    if parsed.scheme != "https" or parsed.hostname != "i.imgflip.com":
+        raise HTTPException(status_code=400, detail="Only HTTPS images from i.imgflip.com are allowed.")
+
+    request = Request(
+        url,
+        headers={"User-Agent": "MemeVaani/1.0 (+https://github.com/ansxka-codes/Meme-Generator)"}
+    )
+    try:
+        with urlopen(request, timeout=8) as upstream:
+            final_url = urlparse(upstream.geturl())
+            if final_url.scheme != "https" or final_url.hostname != "i.imgflip.com":
+                raise HTTPException(status_code=400, detail="Image provider redirected to an unsupported host.")
+            content_type = upstream.headers.get("Content-Type", "").split(";", 1)[0].lower()
+            if not content_type.startswith("image/"):
+                raise HTTPException(status_code=502, detail="Meme provider returned a non-image response.")
+            image_bytes = upstream.read(8 * 1024 * 1024 + 1)
+            if len(image_bytes) > 8 * 1024 * 1024:
+                raise HTTPException(status_code=413, detail="Meme template is too large.")
+            return Response(
+                content=image_bytes,
+                media_type=content_type,
+                headers={"Cache-Control": "public, max-age=86400"}
+            )
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(status_code=502, detail="Unable to load this meme template right now.")
 
 
 @app.post("/api/recommend")
