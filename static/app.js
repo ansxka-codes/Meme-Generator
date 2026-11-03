@@ -152,113 +152,40 @@ const MEME_CLIP_LIBRARY = {
 
 let ALL_DESI_MEMES = Object.values(MEME_CLIP_LIBRARY);
 
-const MEME_MEDIA_API = "https://justmeme.wtf/api/v1";
-let EXTERNAL_MEME_TEMPLATES = [];
-let EXTERNAL_TRENDING_MEMES = [];
+// Keep the curated Indian meme library as the primary source.
+// Sarvam provides recommendations and voice; it is not an image-hosting API.
+// The real Indian meme GIF/PNG assets already live in /static/templates.
 
-function proxiedMemeImage(url) {
-  return "/api/meme-image?url=" + encodeURIComponent(url);
-}
-
-function normalizeExternalTemplate(template) {
-  const imageUrl = template && (template.url || template.image_url);
-  if (!imageUrl || !/^https:\/\/i\.imgflip\.com\//i.test(imageUrl)) return null;
-  const slug = template.slug || template.id || template.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-  const tags = Array.isArray(template.categories) ? template.categories : [];
-  const categoryText = (tags.join(" ") + " " + template.name).toLowerCase();
-  let category = "community";
-  if (/bollywood|indian|desi|hera pheri|babu rao|munna bhai|panchayat|mirzapur|ashneer|bhupendra|aayein/.test(categoryText)) category = "bollywood";
-  else if (/web.?series|series|show/.test(categoryText)) category = "webseries";
-  else if (/viral|reaction|trending/.test(categoryText)) category = "viral";
-  const proxiedUrl = proxiedMemeImage(imageUrl);
-  return {
-    id: "external-" + String(slug).replace(/[^a-zA-Z0-9_-]/g, "-"),
-    externalId: template.id || slug,
-    title: template.name || "Meme template",
-    movie: tags.length ? tags.join(" · ") : "Community template",
-    character: "Template",
-    dialogue: "",
-    category,
-    clipUrl: proxiedUrl,
-    poster: proxiedUrl,
-    templateUrl: proxiedUrl,
-    sourceUrl: imageUrl,
-    pageUrl: template.page_url || ("https://justmeme.wtf/meme/" + slug),
-    defaultTop: "",
-    defaultBottom: ""
-  };
-}
-
-async function fetchMemeApi(path) {
-  const response = await fetch(MEME_MEDIA_API + path);
-  if (!response.ok) throw new Error("Meme library request failed (" + response.status + ")");
-  const data = await response.json();
-  if (data.success === false) throw new Error(data.error || "Meme library request failed");
-  return data;
-}
-
-async function loadExternalMemeLibrary() {
-  const queries = ["hera pheri", "babu rao", "aayein", "binod", "ashneer", "indian meme", "bollywood", "munna bhai", "puneet superstar", "bhupendra jogi"];
-  try {
-    const results = await Promise.allSettled([
-      fetchMemeApi("/trending"),
-      fetchMemeApi("/templates?page=1&limit=100"),
-      ...queries.map(q => fetchMemeApi("/templates/search?q=" + encodeURIComponent(q)))
-    ]);
-    const collected = [];
-    const trendingData = results[0].status === "fulfilled" ? results[0].value : {};
-    const popularData = results[1].status === "fulfilled" ? results[1].value : {};
-    EXTERNAL_TRENDING_MEMES = (trendingData.trending || []).map(normalizeExternalTemplate).filter(Boolean);
-    collected.push(...(popularData.templates || []));
-    results.slice(2).forEach(result => {
-      if (result.status === "fulfilled") collected.push(...(result.value.templates || []));
-    });
-    collected.push(...(trendingData.trending || []));
-    const unique = new Map();
-    collected.forEach(item => {
-      const normalized = normalizeExternalTemplate(item);
-      if (normalized && !unique.has(normalized.id)) unique.set(normalized.id, normalized);
-    });
-    EXTERNAL_MEME_TEMPLATES = Array.from(unique.values());
-    if (!EXTERNAL_MEME_TEMPLATES.length) throw new Error("The meme provider returned no usable templates.");
-
-    // Replace the broken local placeholder paths with real, externally hosted templates.
-    ALL_DESI_MEMES = EXTERNAL_MEME_TEMPLATES;
-    TRENDING_MEME_IDEAS = (EXTERNAL_TRENDING_MEMES.length ? EXTERNAL_TRENDING_MEMES : ALL_DESI_MEMES.slice(0, 8))
-      .map((item, index) => ({
-        ...item,
-        situation: "Try this real meme template with your own situation.",
-        dialogue: "",
-        category: item.category || "community"
-      }));
-    renderTemplatePicker();
-    renderTrendingIdeas();
-    renderVaultMemes();
-    if (ALL_DESI_MEMES[0]) selectStockTemplate(ALL_DESI_MEMES[0].id);
-  } catch (error) {
-    console.warn("Could not load external meme templates:", error);
-    const grid = document.getElementById("vaultMemeGrid");
-    if (grid && !EXTERNAL_MEME_TEMPLATES.length) {
-      grid.innerHTML = '<p class="col-span-full text-sm text-slate-500">Live meme templates are temporarily unavailable. Please refresh to try again.</p>';
-    }
-  }
+function loadExternalMemeLibrary() {
+  // Do not replace the Indian meme collection with generic third-party templates.
+  // Render the curated Bollywood, Indian web-series and viral meme collection.
+  renderTemplatePicker();
+  renderTrendingIdeas();
+  renderVaultMemes();
+  if (ALL_DESI_MEMES[0]) selectStockTemplate(ALL_DESI_MEMES[0].id);
 }
 
 function getBestClipForMeme(meme) {
-  const text = ((meme.template_name || "") + " " + (meme.origin || "") + " " +
-    (meme.character || "") + " " + (meme.clip_keyword || "") + " " + (meme.search_query || "")).toLowerCase();
+  const text = [
+    meme.template_name, meme.origin, meme.character,
+    meme.clip_keyword, meme.search_query
+  ].filter(Boolean).join(" ").toLowerCase();
   const words = text.split(/[^a-z0-9]+/).filter(word => word.length > 2);
   let best = null;
   let bestScore = 0;
-  EXTERNAL_MEME_TEMPLATES.forEach(template => {
-    const candidate = (template.title + " " + template.movie + " " + template.character).toLowerCase();
+
+  ALL_DESI_MEMES.forEach(template => {
+    const candidate = [
+      template.title, template.movie, template.character,
+      template.dialogue, template.id
+    ].filter(Boolean).join(" ").toLowerCase();
     const score = words.reduce((total, word) => total + (candidate.includes(word) ? 1 : 0), 0);
     if (score > bestScore) {
       best = template;
       bestScore = score;
     }
   });
-  return best || null;
+  return bestScore > 0 ? best : null;
 }
 
 // ==========================================
