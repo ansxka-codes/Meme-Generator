@@ -258,7 +258,7 @@ function getBestClipForMeme(meme) {
       bestScore = score;
     }
   });
-  return best || EXTERNAL_TRENDING_MEMES[0] || EXTERNAL_MEME_TEMPLATES[0] || MEME_CLIP_LIBRARY.hera_pheri;
+  return best || EXTERNAL_TRENDING_MEMES[0] || EXTERNAL_MEME_TEMPLATES[0] || null;
 }
 
 // ==========================================
@@ -497,6 +497,7 @@ function renderRecommendations(data) {
 
   memes.forEach((m, idx) => {
     const clipData = getBestClipForMeme(m);
+    if (!clipData) return;
     const card = document.createElement('div');
     card.className = 'meme-card rounded-2xl p-4 flex flex-col justify-between space-y-3 bg-white border border-[#ede5dd] shadow-sm';
     
