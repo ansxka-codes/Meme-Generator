@@ -79,6 +79,10 @@
         <i class="fa-solid fa-volume-high text-[#b86134]"></i>
         <span>Editor Audio SFX Board</span>
       </button>
+      <button onclick="switchTab('tab-vault')" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition-all">
+        <i class="fa-solid fa-box-archive text-[#2d7e5d]"></i>
+        <span>Desi Meme Vault</span>
+      </button>
     </div>
   </div>
 
@@ -365,28 +369,22 @@
 
           <!-- Pick Preset Template or Upload -->
           <div>
-            <label class="text-xs font-semibold text-slate-700 block mb-2">Pick Iconic Indian Template or Upload:</label>
-            <div class="grid grid-cols-4 gap-2 mb-3">
-              <button onclick="selectStockTemplate('babu_rao')" class="template-choice-btn p-2 rounded-lg bg-[#faf8f5] border border-[#ede5dd] hover:border-[#8ad4b6] text-xs font-medium text-center transition">
-                👓 Babu Rao
-              </button>
-              <button onclick="selectStockTemplate('scheme')" class="template-choice-btn p-2 rounded-lg bg-[#faf8f5] border border-[#ede5dd] hover:border-[#8ad4b6] text-xs font-medium text-center transition">
-                🤫 25 Din Scheme
-              </button>
-              <button onclick="selectStockTemplate('panchayat')" class="template-choice-btn p-2 rounded-lg bg-[#faf8f5] border border-[#ede5dd] hover:border-[#8ad4b6] text-xs font-medium text-center transition">
-                👀 Binod Dekh
-              </button>
-              <button onclick="selectStockTemplate('mirzapur')" class="template-choice-btn p-2 rounded-lg bg-[#faf8f5] border border-[#ede5dd] hover:border-[#8ad4b6] text-xs font-medium text-center transition">
-                🔫 Jalwa Hai
-              </button>
+            <div class="flex items-center justify-between mb-2">
+              <label class="text-xs font-semibold text-slate-700">Choose Stock Indian Meme Template:</label>
+              <span class="text-[11px] text-[#2d7e5d] font-bold">11 Templates Ready</span>
+            </div>
+            
+            <!-- Visual Template Selector Grid / Carousel -->
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-2.5 max-h-[220px] overflow-y-auto p-1 border border-[#ede5dd] rounded-xl bg-[#faf8f5] mb-3" id="templatePickerContainer">
+              <!-- Dynamically populated or rendered -->
             </div>
 
-            <!-- Upload File -->
-            <label class="block border-2 border-dashed border-[#ede5dd] hover:border-[#8ad4b6] rounded-xl p-3 text-center cursor-pointer transition bg-[#faf8f5]">
+            <!-- Upload Custom File -->
+            <label class="block border-2 border-dashed border-[#ede5dd] hover:border-[#8ad4b6] rounded-xl p-3 text-center cursor-pointer transition bg-white shadow-sm">
               <input type="file" id="memeImageInput" accept="image/*" class="hidden" onchange="loadMemeImage(this)">
               <div class="flex items-center justify-center space-x-2 text-xs text-slate-700 font-medium">
                 <i class="fa-solid fa-arrow-up-from-bracket text-[#2d7e5d]"></i>
-                <span id="memeUploadLabel">Upload Custom Meme Image / Screenshot</span>
+                <span id="memeUploadLabel">Or Upload Your Own Photo / Screenshot</span>
               </div>
             </label>
           </div>
@@ -523,6 +521,42 @@
         <!-- Soundboard Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="soundboardGrid">
           <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 6: DESI MEME VAULT & TEMPLATES LIBRARY               -->
+    <!-- ======================================================== -->
+    <section id="tab-vault" class="tab-content hidden space-y-6">
+      <div class="bg-white border border-[#ede5dd] rounded-2xl p-6 shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#ede5dd] pb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-800 flex items-center space-x-2">
+              <i class="fa-solid fa-box-archive text-[#2d7e5d]"></i>
+              <span>Desi Meme Vault & Template Library</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">Explore iconic Indian meme templates, dialogue lines, and animated clips ready for creators & editors</p>
+          </div>
+
+          <!-- Search & Filter Bar -->
+          <div class="flex items-center space-x-2">
+            <div class="relative">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
+              <input type="text" id="vaultSearchInput" oninput="filterVaultMemes()" placeholder="Search template or dialogue..." class="pl-8 pr-3 py-1.5 rounded-xl border border-[#ede5dd] bg-[#faf8f5] text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-[#8ad4b6]">
+            </div>
+            <select id="vaultCategoryFilter" onchange="filterVaultMemes()" class="py-1.5 px-3 rounded-xl border border-[#ede5dd] bg-[#faf8f5] text-xs text-slate-700">
+              <option value="all">All Categories</option>
+              <option value="bollywood">Bollywood Classics</option>
+              <option value="webseries">Web Series</option>
+              <option value="viral">Viral Reels & Shows</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Vault Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="vaultMemeGrid">
+          <!-- Dynamically populated by app.js -->
         </div>
       </div>
     </section>

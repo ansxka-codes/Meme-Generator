@@ -6,89 +6,167 @@
 // ==========================================
 const MEME_CLIP_LIBRARY = {
   hera_pheri: {
-    clipUrl: "https://media.giphy.com/media/dIncxHCFdSmh0ROHwq/giphy.gif",
-    poster: "https://media.giphy.com/media/dIncxHCFdSmh0ROHwq/giphy_s.gif",
-    title: "Akshay Kumar - Scheme Face",
-    movie: "Phir Hera Pheri"
+    id: "akshay_scheme",
+    clipUrl: "/static/templates/akshay_scheme.gif",
+    poster: "/static/templates/akshay_scheme.png",
+    templateUrl: "/static/templates/akshay_scheme.png",
+    title: "Akshay Kumar - 25 Din Me Paisa Double",
+    movie: "Phir Hera Pheri",
+    character: "Raju",
+    dialogue: "25 din me paisa double!",
+    category: "bollywood",
+    defaultTop: "WHEN FRIEND SAYS: KAL PAKKA PAISE WAPAS KARUNGA",
+    defaultBottom: "25 DIN ME PAISA DOUBLE"
   },
   babu_rao: {
-    clipUrl: "https://media.giphy.com/media/W0c3xcZ3F1d0EYYb0f/giphy.gif",
-    poster: "https://media.giphy.com/media/W0c3xcZ3F1d0EYYb0f/giphy_s.gif",
-    title: "Babu Rao Utha Le Re Baba",
-    movie: "Hera Pheri"
+    id: "babu_rao",
+    clipUrl: "/static/templates/babu_rao.gif",
+    poster: "/static/templates/babu_rao.png",
+    templateUrl: "/static/templates/babu_rao.png",
+    title: "Babu Rao - Utha Le Re Baba",
+    movie: "Hera Pheri",
+    character: "Babu Rao Apte",
+    dialogue: "Utha le re baba, utha le!",
+    category: "bollywood",
+    defaultTop: "CLIENT CALL AT 8:58 AM ON MONDAY",
+    defaultBottom: "UTHA LE RE BABA UTHA LE"
   },
   mirzapur: {
-    clipUrl: "https://media.giphy.com/media/26n61r3hygmRzpHqM/giphy.gif",
-    poster: "https://media.giphy.com/media/26n61r3hygmRzpHqM/giphy_s.gif",
-    title: "Kaleen Bhaiya / Munna - Jalwa",
-    movie: "Mirzapur"
+    id: "mirzapur_jalwa",
+    clipUrl: "/static/templates/mirzapur_jalwa.gif",
+    poster: "/static/templates/mirzapur_jalwa.png",
+    templateUrl: "/static/templates/mirzapur_jalwa.png",
+    title: "Munna Bhaiya - Jalwa Hai Hamara",
+    movie: "Mirzapur",
+    character: "Munna / Kaleen Bhaiya",
+    dialogue: "Jalwa hai hamara yahan!",
+    category: "webseries",
+    defaultTop: "FIXED PRODUCTION BUG IN 1 MINUTE",
+    defaultBottom: "JALWA HAI HAMARA YAHAN"
   },
   panchayat: {
-    clipUrl: "https://media.giphy.com/media/W3a0zO282odf9jeg9z/giphy.gif",
-    poster: "https://media.giphy.com/media/W3a0zO282odf9jeg9z/giphy_s.gif",
+    id: "panchayat_binod",
+    clipUrl: "/static/templates/panchayat_binod.gif",
+    poster: "/static/templates/panchayat_binod.png",
+    templateUrl: "/static/templates/panchayat_binod.png",
     title: "Dekh Raha Hai Binod",
-    movie: "Panchayat"
+    movie: "Panchayat",
+    character: "Banrakas & Binod",
+    dialogue: "Dekh raha hai Binod, kaise baatein ghumaayi jaa rahi hain",
+    category: "webseries",
+    defaultTop: "MANAGER EXPLAINING 2% SALARY HIKE",
+    defaultBottom: "DEKH RAHA HAI BINOD"
   },
   three_idiots: {
-    clipUrl: "https://media.giphy.com/media/13m24iFmhomZi0/giphy.gif",
-    poster: "https://media.giphy.com/media/13m24iFmhomZi0/giphy_s.gif",
+    id: "three_idiots",
+    clipUrl: "/static/templates/three_idiots.gif",
+    poster: "/static/templates/three_idiots.png",
+    templateUrl: "/static/templates/three_idiots.png",
     title: "Arre Kehna Kya Chahte Ho",
-    movie: "3 Idiots"
+    movie: "3 Idiots",
+    character: "Chatur / Silencer",
+    dialogue: "Arre kehna kya chahte ho?",
+    category: "bollywood",
+    defaultTop: "CLIENT 8-PAGE FEEDBACK FOR BUTTON COLOR",
+    defaultBottom: "ARRE KEHNA KYA CHAHTE HO"
   },
   welcome: {
-    clipUrl: "https://media.giphy.com/media/IS6CvSgWNVqVtLBB5A/giphy.gif",
-    poster: "https://media.giphy.com/media/IS6CvSgWNVqVtLBB5A/giphy_s.gif",
+    id: "welcome_majnu",
+    clipUrl: "/static/templates/welcome_majnu.gif",
+    poster: "/static/templates/welcome_majnu.png",
+    templateUrl: "/static/templates/welcome_majnu.png",
     title: "Majnu Bhai - Meri Ek Taang Nakli Hai",
-    movie: "Welcome"
+    movie: "Welcome",
+    character: "Majnu Bhai (Anil Kapoor)",
+    dialogue: "Meri ek taang nakli hai, main hockey ka khiladi tha",
+    category: "bollywood",
+    defaultTop: "ME EXPLAINING WHY I AM LATE AGAIN",
+    defaultBottom: "MERI EK TAANG NAKLI HAI"
   },
   aayein: {
-    clipUrl: "https://media.giphy.com/media/0Vv0Ne2CnOClIExIuL/giphy.gif",
-    poster: "https://media.giphy.com/media/0Vv0Ne2CnOClIExIuL/giphy_s.gif",
-    title: "Bhupendra Jogi - Aayein?",
-    movie: "Viral Interview"
+    id: "aayein",
+    clipUrl: "/static/templates/aayein.gif",
+    poster: "/static/templates/aayein.png",
+    templateUrl: "/static/templates/aayein.png",
+    title: "Aayein? (Bhupendra Jogi)",
+    movie: "Viral Interview",
+    character: "Bhupendra Jogi",
+    dialogue: "Aayein? US me bahut jagah gaye hain",
+    category: "viral",
+    defaultTop: "WHERE DO YOU SEE YOURSELF IN 5 YEARS?",
+    defaultBottom: "AAYEIN? US ME BAHUT JAGAH GAYE HAIN"
   },
   tata_bye_bye: {
-    clipUrl: "https://media.giphy.com/media/3o7btUg31RCoBK2rMQ/giphy.gif",
-    poster: "https://media.giphy.com/media/3o7btUg31RCoBK2rMQ/giphy_s.gif",
+    id: "tata_bye_bye",
+    clipUrl: "/static/templates/tata_bye_bye.gif",
+    poster: "/static/templates/tata_bye_bye.png",
+    templateUrl: "/static/templates/tata_bye_bye.png",
     title: "Gaya... Khatam... Tata Bye Bye",
-    movie: "Viral Speech"
+    movie: "Viral Speech",
+    character: "Rahul Gandhi",
+    dialogue: "Gaya, khatam, tata, bye bye!",
+    category: "viral",
+    defaultTop: "MOM OPENING THE EXAM REPORT CARD",
+    defaultBottom: "GAYA KHATAM TATA BYE BYE"
   },
   shark_tank: {
-    clipUrl: "https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy.gif",
-    poster: "https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy_s.gif",
-    title: "Ashneer Grover - Doglapan",
-    movie: "Shark Tank India"
+    id: "shark_tank",
+    clipUrl: "/static/templates/shark_tank.gif",
+    poster: "/static/templates/shark_tank.png",
+    templateUrl: "/static/templates/shark_tank.png",
+    title: "Ashneer Grover - Yeh Sab Doglapan Hai",
+    movie: "Shark Tank India",
+    character: "Ashneer Grover",
+    dialogue: "Yeh sab doglapan hai!",
+    category: "viral",
+    defaultTop: "WHEN TOPPER SAYS: BHAI MAINE KUCH NAHI PADHA",
+    defaultBottom: "YEH SAB DOGLAPAN HAI"
   },
   munna_bhai: {
-    clipUrl: "https://media.giphy.com/media/3o7TKr3nzbh5WgCFxe/giphy.gif",
-    poster: "https://media.giphy.com/media/3o7TKr3nzbh5WgCFxe/giphy_s.gif",
+    id: "munna_bhai",
+    clipUrl: "/static/templates/munna_bhai.gif",
+    poster: "/static/templates/munna_bhai.png",
+    templateUrl: "/static/templates/munna_bhai.png",
     title: "Munna Bhai - Nahi",
-    movie: "Munna Bhai M.B.B.S."
+    movie: "Munna Bhai M.B.B.S.",
+    character: "Sanjay Dutt",
+    dialogue: "Nahi!",
+    category: "bollywood",
+    defaultTop: "CAN YOU WORK OVERTIME THIS WEEKEND?",
+    defaultBottom: "NAHI"
   },
   moye_moye: {
-    clipUrl: "https://media.giphy.com/media/l4pTfx2qLszoacZRS/giphy.gif",
-    poster: "https://media.giphy.com/media/l4pTfx2qLszoacZRS/giphy_s.gif",
+    id: "moye_moye",
+    clipUrl: "/static/templates/moye_moye.gif",
+    poster: "/static/templates/moye_moye.png",
+    templateUrl: "/static/templates/moye_moye.png",
     title: "Moye Moye Traumatic Moment",
-    movie: "Viral Reel"
+    movie: "Viral Reel",
+    character: "Viral Hook",
+    dialogue: "Moye Moye",
+    category: "viral",
+    defaultTop: "INVESTED ALL SAVINGS IN RANDOM CRYPTO COIN",
+    defaultBottom: "MOYE MOYE"
   }
 };
+
+const ALL_DESI_MEMES = Object.values(MEME_CLIP_LIBRARY);
 
 function getBestClipForMeme(meme) {
   const text = ((meme.template_name || '') + ' ' + (meme.origin || '') + ' ' + (meme.character || '') + ' ' + (meme.clip_keyword || '')).toLowerCase();
   
   if (text.includes('babu') || text.includes('utha le') || text.includes('apte')) return MEME_CLIP_LIBRARY.babu_rao;
   if (text.includes('hera pheri') || text.includes('scheme') || text.includes('akshay') || text.includes('paisa')) return MEME_CLIP_LIBRARY.hera_pheri;
-  if (text.includes('mirzapur') || text.includes('tripathi') || text.includes('munna')) return MEME_CLIP_LIBRARY.mirzapur;
+  if (text.includes('mirzapur') || text.includes('tripathi') || text.includes('munna') || text.includes('jalwa')) return MEME_CLIP_LIBRARY.mirzapur;
   if (text.includes('binod') || text.includes('panchayat') || text.includes('sachiv')) return MEME_CLIP_LIBRARY.panchayat;
-  if (text.includes('idiot') || text.includes('virus') || text.includes('kehna kya')) return MEME_CLIP_LIBRARY.three_idiots;
+  if (text.includes('idiot') || text.includes('virus') || text.includes('kehna kya') || text.includes('chatur')) return MEME_CLIP_LIBRARY.three_idiots;
   if (text.includes('welcome') || text.includes('majnu') || text.includes('uday')) return MEME_CLIP_LIBRARY.welcome;
   if (text.includes('aayein') || text.includes('bhupendra')) return MEME_CLIP_LIBRARY.aayein;
   if (text.includes('khatam') || text.includes('bye bye') || text.includes('tata')) return MEME_CLIP_LIBRARY.tata_bye_bye;
   if (text.includes('shark') || text.includes('ashneer') || text.includes('dogla')) return MEME_CLIP_LIBRARY.shark_tank;
-  if (text.includes('munna bhai') || text.includes('circuit')) return MEME_CLIP_LIBRARY.munna_bhai;
+  if (text.includes('munna') || text.includes('circuit') || text.includes('nahi')) return MEME_CLIP_LIBRARY.munna_bhai;
   if (text.includes('moye')) return MEME_CLIP_LIBRARY.moye_moye;
 
-  // Fallback cycling clip
   return MEME_CLIP_LIBRARY.hera_pheri;
 }
 
@@ -442,17 +520,21 @@ function useInMemeStudio(caption, templateName, clipUrl) {
   document.getElementById('memeTopText').value = templateName;
   document.getElementById('memeBottomText').value = caption;
 
-  if (clipUrl) {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.onload = () => {
-      currentMemeImg = img;
-      currentTemplateType = 'clip';
-      document.getElementById('memeUploadLabel').innerText = templateName + ' (Loaded)';
-      renderMemeCanvas();
-    };
-    img.src = clipUrl;
-  }
+  const matched = ALL_DESI_MEMES.find(m => 
+    templateName.toLowerCase().includes(m.id) || 
+    templateName.toLowerCase().includes(m.movie.toLowerCase()) ||
+    (m.character && templateName.toLowerCase().includes(m.character.toLowerCase()))
+  );
+
+  const imgToLoad = matched ? matched.templateUrl : (clipUrl || '/static/templates/akshay_scheme.png');
+  const img = new Image();
+  img.onload = () => {
+    currentMemeImg = img;
+    currentTemplateType = matched ? matched.id : 'clip';
+    document.getElementById('memeUploadLabel').innerText = templateName + ' (Loaded)';
+    renderMemeCanvas();
+  };
+  img.src = imgToLoad;
 
   switchTab('tab-meme-studio');
   renderMemeCanvas();
@@ -684,14 +766,47 @@ async function generateGifFromVideo() {
 // 6. Meme & Sticker Canvas Studio
 // ==========================================
 let currentMemeImg = null;
-let currentTemplateType = 'custom';
+let currentTemplateType = 'akshay_scheme';
 
-function selectStockTemplate(type) {
-  currentTemplateType = type;
-  document.querySelectorAll('.template-choice-btn').forEach(b => b.classList.remove('border-[#8ad4b6]', 'bg-[#8ad4b6]/10'));
-  event.target.classList.add('border-[#8ad4b6]', 'bg-[#8ad4b6]/10');
-  currentMemeImg = null;
-  renderMemeCanvas();
+function selectStockTemplate(memeId) {
+  const meme = ALL_DESI_MEMES.find(m => m.id === memeId) || ALL_DESI_MEMES[0];
+  if (!meme) return;
+
+  const img = new Image();
+  img.onload = () => {
+    currentMemeImg = img;
+    currentTemplateType = meme.id;
+    if (meme.defaultTop) document.getElementById('memeTopText').value = meme.defaultTop;
+    if (meme.defaultBottom) document.getElementById('memeBottomText').value = meme.defaultBottom;
+    document.getElementById('memeUploadLabel').innerText = `${meme.title} (Loaded)`;
+    renderMemeCanvas();
+  };
+  img.src = meme.templateUrl;
+
+  document.querySelectorAll('.template-pick-card').forEach(c => {
+    c.classList.remove('border-[#8ad4b6]', 'ring-2', 'ring-[#8ad4b6]', 'bg-[#8ad4b6]/10');
+  });
+  const activeEl = document.getElementById(`template-card-${memeId}`);
+  if (activeEl) activeEl.classList.add('border-[#8ad4b6]', 'ring-2', 'ring-[#8ad4b6]', 'bg-[#8ad4b6]/10');
+}
+
+function renderTemplatePicker() {
+  const container = document.getElementById('templatePickerContainer');
+  if (!container) return;
+  container.innerHTML = '';
+
+  ALL_DESI_MEMES.forEach(m => {
+    const card = document.createElement('button');
+    card.id = `template-card-${m.id}`;
+    card.className = 'template-pick-card p-1.5 rounded-xl border border-[#ede5dd] bg-white hover:border-[#8ad4b6] transition flex flex-col items-center text-center shadow-sm';
+    card.onclick = () => selectStockTemplate(m.id);
+    card.innerHTML = `
+      <img src="${m.poster}" alt="${m.title}" class="w-full h-14 object-cover rounded-lg mb-1">
+      <span class="text-[10px] font-bold text-slate-800 truncate w-full">${m.character || m.title}</span>
+      <span class="text-[9px] text-slate-500 truncate w-full">${m.movie}</span>
+    `;
+    container.appendChild(card);
+  });
 }
 
 function loadMemeImage(input) {
@@ -873,7 +988,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "25 Din Me Paisa Double",
     situation: "When friend promises: 'Bhai kal pakka paise wapas karunga, aisi scheme hai ki 25 din me paisa double!'",
     dialogue: "25 din me paisa double!",
-    clipUrl: "https://media.giphy.com/media/dIncxHCFdSmh0ROHwq/giphy.gif"
+    clipUrl: "/static/templates/akshay_scheme.gif"
   },
   {
     id: "binod",
@@ -882,7 +997,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "Dekh Raha Hai Binod",
     situation: "When manager pretends to be your best friend in 1-on-1 right before giving a 2% appraisal.",
     dialogue: "Dekh raha hai Binod, kaise baatein ghumaayi jaa rahi hain",
-    clipUrl: "https://media.giphy.com/media/W3a0zO282odf9jeg9z/giphy.gif"
+    clipUrl: "/static/templates/panchayat_binod.gif"
   },
   {
     id: "jalwa",
@@ -891,7 +1006,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "Jalwa Hai Hamara",
     situation: "When you finally fix an impossible production bug after 10 hours with one simple print statement.",
     dialogue: "Jalwa hai hamara yahan!",
-    clipUrl: "https://media.giphy.com/media/26n61r3hygmRzpHqM/giphy.gif"
+    clipUrl: "/static/templates/mirzapur_jalwa.gif"
   },
   {
     id: "kehna_kya",
@@ -900,7 +1015,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "Arre Kehna Kya Chahte Ho",
     situation: "When client sends an 8-page document explaining feedback for a single button color change.",
     dialogue: "Arre kehna kya chahte ho?",
-    clipUrl: "https://media.giphy.com/media/13m24iFmhomZi0/giphy.gif"
+    clipUrl: "/static/templates/three_idiots.gif"
   },
   {
     id: "aayein",
@@ -909,7 +1024,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "Aayein? (Bhupendra Jogi)",
     situation: "When interviewer asks: 'Where do you see yourself in 5 years solving quantum equations in Excel?'",
     dialogue: "Aayein? US me bahut jagah gaye hain",
-    clipUrl: "https://media.giphy.com/media/0Vv0Ne2CnOClIExIuL/giphy.gif"
+    clipUrl: "/static/templates/aayein.gif"
   },
   {
     id: "doglapan",
@@ -918,7 +1033,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "Yeh Sab Doglapan Hai",
     situation: "When that one friend who said 'bhai bilkul padhai nahi hui' scores 98% in the final exam.",
     dialogue: "Yeh sab doglapan hai!",
-    clipUrl: "https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy.gif"
+    clipUrl: "/static/templates/shark_tank.gif"
   },
   {
     id: "tata_bye",
@@ -927,7 +1042,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "Gaya... Khatam... Tata Bye Bye",
     situation: "When mom finds the semester report card behind the fridge and calls you by your full official name.",
     dialogue: "Gaya, khatam, tata, bye bye!",
-    clipUrl: "https://media.giphy.com/media/3o7btUg31RCoBK2rMQ/giphy.gif"
+    clipUrl: "/static/templates/tata_bye_bye.gif"
   },
   {
     id: "babu_rao",
@@ -936,7 +1051,7 @@ const TRENDING_MEME_IDEAS = [
     template_name: "Utha Le Re Baba",
     situation: "When you wake up at 8:58 AM on Monday and remember your client demo starts at 9:00 AM.",
     dialogue: "Utha le re baba, utha le, mere ko nahi re, in dono ko utha le!",
-    clipUrl: "https://media.giphy.com/media/W0c3xcZ3F1d0EYYb0f/giphy.gif"
+    clipUrl: "/static/templates/babu_rao.gif"
   }
 ];
 
@@ -1074,9 +1189,82 @@ function renderSoundboard() {
   });
 }
 
+function renderVaultMemes(filterText = '', category = 'all') {
+  const grid = document.getElementById('vaultMemeGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const search = (filterText || '').toLowerCase().trim();
+  const filtered = ALL_DESI_MEMES.filter(m => {
+    const matchesCat = category === 'all' || m.category === category;
+    const matchesSearch = !search || 
+      m.title.toLowerCase().includes(search) || 
+      m.dialogue.toLowerCase().includes(search) ||
+      m.movie.toLowerCase().includes(search) ||
+      (m.character && m.character.toLowerCase().includes(search));
+    return matchesCat && matchesSearch;
+  });
+
+  filtered.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'meme-card rounded-2xl p-4 bg-white border border-[#ede5dd] shadow-sm flex flex-col justify-between space-y-3';
+    card.innerHTML = `
+      <div>
+        <div class="clip-preview-container border border-[#ede5dd] shadow-sm group bg-[#faf8f5] mb-2.5">
+          <img src="${m.clipUrl}" alt="${m.title}" class="w-full h-full object-cover">
+          <div class="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-white/95 text-[#1e5843] text-[10px] font-bold border border-[#8ad4b6]/60 shadow-sm">
+            <i class="fa-solid fa-play mr-1 text-[#2d7e5d]"></i>Template Clip
+          </div>
+          <a href="${m.templateUrl}" download="${m.id}-template.png" class="absolute top-2 right-2 px-2 py-1 rounded bg-white/95 hover:bg-white text-slate-700 text-xs shadow-sm transition" title="Download Blank Template">
+            <i class="fa-solid fa-download"></i>
+          </a>
+        </div>
+
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span class="px-2 py-0.5 rounded-full bg-[#f0c6ad]/40 text-[#854522] font-semibold text-[10px] border border-[#f0c6ad]">${m.movie}</span>
+          <span class="text-[11px] font-bold text-[#2d7e5d] uppercase tracking-wider">${m.character || ''}</span>
+        </div>
+        <h4 class="text-sm font-bold text-slate-800">${m.title}</h4>
+        
+        <div class="mt-2 flex items-center justify-between bg-[#faf8f5] border border-[#ede5dd] rounded-lg p-2">
+          <span class="text-xs font-mono font-medium text-[#854522] truncate mr-2">"${m.dialogue}"</span>
+          <button onclick="playDialogueVoice('${encodeURIComponent(m.dialogue)}', 'ratan', this)" class="px-2 py-1 rounded-full bg-white hover:bg-[#ede5dd] text-[#2d7e5d] text-xs shadow-sm border border-[#ede5dd] flex items-center space-x-1 shrink-0 transition" title="Listen to voice">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-[#ede5dd] flex items-center space-x-2">
+        <button onclick="openMemeInStudio('${m.id}')" class="flex-1 py-1.5 rounded-xl bg-[#faf8f5] hover:bg-[#ede5dd] text-xs font-semibold text-slate-700 border border-[#ede5dd] transition flex items-center justify-center space-x-1">
+          <i class="fa-regular fa-image text-[#2d7e5d]"></i>
+          <span>Create Meme</span>
+        </button>
+        <a href="${m.templateUrl}" download="${m.id}-template.png" class="px-3 py-1.5 rounded-xl bg-[#faf8f5] hover:bg-[#ede5dd] text-xs font-semibold text-slate-700 border border-[#ede5dd] transition flex items-center justify-center space-x-1" title="Download High-Res Blank Template">
+          <i class="fa-solid fa-download text-[#b86134]"></i>
+          <span>Template</span>
+        </a>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function filterVaultMemes() {
+  const query = document.getElementById('vaultSearchInput').value;
+  const category = document.getElementById('vaultCategoryFilter').value;
+  renderVaultMemes(query, category);
+}
+
+function openMemeInStudio(memeId) {
+  switchTab('tab-meme-studio');
+  selectStockTemplate(memeId);
+}
+
 // Initial setup
 window.addEventListener('DOMContentLoaded', () => {
-  renderMemeCanvas();
+  renderTemplatePicker();
   renderSoundboard();
   renderTrendingIdeas();
+  renderVaultMemes();
+  selectStockTemplate('akshay_scheme');
 });
